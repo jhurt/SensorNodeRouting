@@ -1,0 +1,74 @@
+<?xml version="1.0" ?>
+<project name="SensorNodeRouting" default="compile">
+
+	<property name="library.path" value="lib" />
+	<property name="debug" value="off" />
+	<property name="optimize" value="on" />
+	<property name="jdk_version" value="1.6" />
+	<property name="src_folder" value="src" />
+	<property name="build_folder" value="build" />
+	<property name="dist_folder" value="dist" />
+	<property name="jar_name" value="JasonHurt_SensorNodeRouting.jar" />
+
+	<!-- init target(s) -->
+	<target name="init">
+		<mkdir dir="${build_folder}/classes" />
+		<mkdir dir="${dist_folder}" />
+	</target>
+
+	<!-- compile target(s) -->
+	<target name="compile" depends="clean, init">
+		<javac srcdir="${src_folder}" destdir="${build_folder}/classes" includes="com/**" source="${jdk_version}" 
+			optimize="${optimize}" debug="${debug}" target="${jdk_version}">
+			<!--<classpath refid="project.classpath" />-->
+		</javac>
+		<copy todir="${build_folder}/classes">
+			<fileset dir="${src_folder}">
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="deploy" depends="compile">
+		<jar destfile="${dist_folder}/${jar_name}" basedir="${build_folder}/classes" compress="false">
+			<manifest>
+				<!--specify entry point -->
+				<attribute name="Main-Class" value="com.unlv.edu.jlh.MainGUI" />
+				<attribute name="Class-Path" value="${jar_name}" />
+			</manifest>
+		</jar>
+		<copy todir="${dist_folder}">
+			<fileset dir="${dist_folder}">
+				<include name="${jar_name}" />
+			</fileset>
+			<fileset dir="web" includes="**/*" />
+		</copy>
+	</target>
+
+	<target name="run" depends="deploy">
+		<java jar="${jar_name}" fork="true" failonerror="true" maxmemory="128m">
+			<classpath>
+				<pathelement location="${dist_folder}/${jar_name}" />
+				<pathelement path="${java.class.path}" />
+			</classpath>
+		</java>
+	</target>
+
+	<!-- doc target -->
+	<target name="doc" depends="init">
+		<echo message="Creating javadocs..." />
+		<delete dir="doc" />
+		<mkdir dir="doc/api" />
+		<javadoc destdir="doc/api" author="true" additionalparam="-breakiterator">
+			<packageset dir="${src_folder}">
+			</packageset>
+		</javadoc>
+	</target>
+
+	<!-- clean target -->
+	<target name="clean">
+		<delete dir="${build_folder}" />
+		<delete dir="${dist_folder}" />
+	</target>
+
+</project>

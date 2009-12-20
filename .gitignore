@@ -1,0 +1,6 @@
+bin/**/*
+out/**/*
+Data/**/*
+dist/**/*
+build/**/*
+dist.tar

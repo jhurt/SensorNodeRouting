@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jnlp spec="1.0+" codebase="http://www.egr.unlv.edu/~jhurt/">
+  <information>
+    <title>Jason Hurt Sensor Node Routing Web Start</title>
+    <vendor>UNLV</vendor>
+    <description>Java Swing Sensor Node Routing</description>
+    <offline-allowed />
+  </information>
+  <resources>
+    <j2se version="1.6+"
+          href="http://java.sun.com/products/autodl/j2se"
+          java-vm-args="-client -Xms128m -Xmx512m -Xverify:none" />
+    <jar href="JasonHurt_SensorNodeRouting.jar" main="true" />
+  </resources>
+  <application-desc main-class="com.unlv.edu.jlh.MainGUI" />
+</jnlp>
